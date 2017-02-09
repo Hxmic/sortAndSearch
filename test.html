@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>testMerge</title>
+</head>
+<body>
+<script type="text/javascript">
+    function ArrayList(){
+		var array = [];
+		this.insert = function(item){
+			array.push(item);
+		};
+		this.toString = function(){
+			return array.join();
+		};
+        
+
+
+        var swap = function(index1, index2){
+var aux = array[index1];
+array[index1] = array[index2];
+array[index2] = aux;
+};
+        this.modifiedBubbleSort = function(){
+        var length = array.length;
+        for (var i=0; i<length; i++){
+        for (var j=0; j<length-1-i; j++ ){ //{1}
+        if (array[j] > array[j+1]){
+        swap(j, j+1);
+        }
+        }
+        }
+        };
+
+
+		this.mergeSort = function(){
+			array = mergeSortRec(array);
+		};
+		var mergeSortRec = function(array){
+			var length = array.length;
+			if(length === 1) { //{1}
+				return array; //{2}
+			}
+			var mid = Math.floor(length / 2), //{3}
+			left = array.slice(0, mid), //{4}
+			right = array.slice(mid, length); //{5}
+			return merge(mergeSortRec(left), mergeSortRec(right)); //{6}
+		};
+		var merge = function(left, right){
+			var result = [], // {7}
+				il = 0,
+				ir = 0;
+			while(il < left.length && ir < right.length) { // {8}
+				if(left[il] < right[ir]) {
+					result.push(left[il++]); // {9}
+				} else{
+					result.push(right[ir++]); // {10}
+				}
+			}
+			while (il < left.length){ // {11}
+				result.push(left[il++]);
+			}
+			while (ir < right.length){ // {12}
+				result.push(right[ir++]);
+			}
+			return result; // {13}
+		};
+    }
+
+    function createArray(size){
+    	var array = new ArrayList();
+    	for(var i=size; i>0; i--){
+    		array.insert(i);
+    	}
+    	return array;
+    }
+
+	window.onload = function(){
+        
+        var arr1 = createArray(5);
+    console.log(arr1.toString());
+    arr1.modifiedBubbleSort();
+    console.log(arr1.toString());
+
+	    var arr4 = createArray(5);
+	    arr4.mergeSort();
+	    console.log(arr4.toString());
+	}
+</script>
+</body>
+</html>
